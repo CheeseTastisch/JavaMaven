@@ -1,8 +1,8 @@
 package me.cheesetastisch.core.bootstrap.util.json
 
 import com.google.gson.*
-import me.cheesetastisch.core.bootstrap.util.scope.supplyNullable
-import me.cheesetastisch.core.bootstrap.util.scope.withThis
+import me.cheesetastisch.core.kotlin.scope.supplyNullable
+import me.cheesetastisch.core.kotlin.scope.withThis
 import org.jetbrains.annotations.Contract
 import java.io.*
 import java.math.BigDecimal

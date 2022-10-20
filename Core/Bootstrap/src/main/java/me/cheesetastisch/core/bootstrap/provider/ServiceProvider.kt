@@ -6,5 +6,5 @@ import kotlin.reflect.KClass
 @Retention(AnnotationRetention.RUNTIME)
 annotation class ServiceProvider(
     val interfaceClass: KClass<out IServiceProvider>,
-    val dependProviders: Array<KClass<out IServiceProvider>>
+    val dependProviders: Array<KClass<out IServiceProvider>> = []
 )

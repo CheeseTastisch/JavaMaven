@@ -7,10 +7,10 @@ abstract class AbstractServiceProvider(
     var state: ServiceProviderState = ServiceProviderState.UNLOADED
 ) {
 
-    fun load() {}
+    open fun load() {}
 
-    fun enable() {}
+    open fun enable() {}
 
-    fun disable() {}
+    open fun disable() {}
 
 }

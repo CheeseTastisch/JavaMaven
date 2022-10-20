@@ -1,13 +1,13 @@
 /.idea
 
-# IML in subdirecotry
-/Core/Core.iml
-/Core/Bootstrap/Bootstrap.iml
-
 # iml in main directory
 /Bootstrap.iml
 /Core.iml
+/Database.iml
 /Java.iml
+/Kotlin.iml
 
 # target folders
 /Core/Bootstrap/target
+/Core/Database/target
+/Core/Kotlin/target

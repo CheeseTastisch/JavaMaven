@@ -27,6 +27,12 @@
             <id>spigot-repo</id>
             <url>https://hub.spigotmc.org/nexus/content/repositories/snapshots/</url>
         </repository>
+
+        <!-- Custom Repository -->
+        <repository>
+            <id>cheesetastisch</id>
+            <url>https://cheesetastisch.jfrog.io/artifactory/cheesetastisch/</url>
+        </repository>
     </repositories>
 
     <dependencies>
