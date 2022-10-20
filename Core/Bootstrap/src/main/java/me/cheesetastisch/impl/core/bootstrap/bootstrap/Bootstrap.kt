@@ -1,6 +1,6 @@
-package me.cheesetastisch.core.bootstrap.bootstrap
+package me.cheesetastisch.impl.core.bootstrap.bootstrap
 
-import me.cheesetastisch.core.bootstrap.Core
+import me.cheesetastisch.impl.core.bootstrap.Core
 import org.bukkit.plugin.java.JavaPlugin
 
 class Bootstrap : JavaPlugin() {

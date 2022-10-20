@@ -1,4 +1,4 @@
-package me.cheesetastisch.impl.core.bootstrap.util.json
+package me.cheesetastisch.core.bootstrap.util.json
 
 import com.google.gson.Gson
 import com.google.gson.GsonBuilder

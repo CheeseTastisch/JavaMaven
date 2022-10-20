@@ -1,8 +1,8 @@
-package me.cheesetastisch.core.bootstrap.util.annotation
+package me.cheesetastisch.impl.core.bootstrap.util.annotation
 
 import io.github.classgraph.ClassGraph
 import io.github.classgraph.ClassInfo
-import me.cheesetastisch.impl.core.bootstrap.util.annotation.IAnnotationScanner
+import me.cheesetastisch.core.bootstrap.util.annotation.IAnnotationScanner
 
 class AnnotationScanner : IAnnotationScanner {
 

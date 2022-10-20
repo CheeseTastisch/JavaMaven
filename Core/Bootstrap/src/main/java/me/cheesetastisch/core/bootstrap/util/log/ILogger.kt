@@ -1,4 +1,4 @@
-package me.cheesetastisch.impl.core.bootstrap.util.log
+package me.cheesetastisch.core.bootstrap.util.log
 
 interface ILogger {
 

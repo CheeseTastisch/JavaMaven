@@ -1,4 +1,4 @@
-package me.cheesetastisch.impl.core.bootstrap.util.annotation
+package me.cheesetastisch.core.bootstrap.util.annotation
 
 import io.github.classgraph.ClassInfo
 import kotlin.reflect.KClass

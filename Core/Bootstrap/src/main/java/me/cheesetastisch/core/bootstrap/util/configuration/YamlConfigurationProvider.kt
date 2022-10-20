@@ -1,4 +1,4 @@
-package me.cheesetastisch.impl.core.bootstrap.util.configuration
+package me.cheesetastisch.core.bootstrap.util.configuration
 
 import org.bukkit.configuration.file.YamlConfiguration
 import java.io.File

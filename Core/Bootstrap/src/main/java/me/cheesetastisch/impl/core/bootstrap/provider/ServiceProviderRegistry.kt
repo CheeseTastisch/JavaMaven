@@ -1,8 +1,7 @@
-package me.cheesetastisch.core.bootstrap.provider
+package me.cheesetastisch.impl.core.bootstrap.provider
 
-import me.cheesetastisch.impl.core.bootstrap.ICore
-import me.cheesetastisch.impl.core.bootstrap.provider.*
-import java.lang.Exception
+import me.cheesetastisch.core.bootstrap.ICore
+import me.cheesetastisch.core.bootstrap.provider.*
 
 class ServiceProviderRegistry(private val core: ICore) : IServiceProviderRegistry {
 

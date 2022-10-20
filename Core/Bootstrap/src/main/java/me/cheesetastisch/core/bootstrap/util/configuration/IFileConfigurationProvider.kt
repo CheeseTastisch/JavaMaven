@@ -1,4 +1,4 @@
-package me.cheesetastisch.impl.core.bootstrap.util.configuration
+package me.cheesetastisch.core.bootstrap.util.configuration
 
 interface IFileConfigurationProvider {
     

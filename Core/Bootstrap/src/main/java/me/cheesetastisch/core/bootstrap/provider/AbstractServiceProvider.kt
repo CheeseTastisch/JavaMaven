@@ -1,6 +1,6 @@
-package me.cheesetastisch.impl.core.bootstrap.provider
+package me.cheesetastisch.core.bootstrap.provider
 
-import me.cheesetastisch.impl.core.bootstrap.ICore
+import me.cheesetastisch.core.bootstrap.ICore
 
 abstract class AbstractServiceProvider(
     val core: ICore,

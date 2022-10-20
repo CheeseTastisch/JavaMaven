@@ -1,9 +1,9 @@
-package me.cheesetastisch.impl.core.bootstrap
+package me.cheesetastisch.core.bootstrap
 
-import me.cheesetastisch.impl.core.bootstrap.provider.IServiceProvider
-import me.cheesetastisch.impl.core.bootstrap.provider.IServiceProviderRegistry
-import me.cheesetastisch.impl.core.bootstrap.util.annotation.IAnnotationScanner
-import me.cheesetastisch.impl.core.bootstrap.util.log.ILogger
+import me.cheesetastisch.core.bootstrap.provider.IServiceProvider
+import me.cheesetastisch.core.bootstrap.provider.IServiceProviderRegistry
+import me.cheesetastisch.core.bootstrap.util.annotation.IAnnotationScanner
+import me.cheesetastisch.core.bootstrap.util.log.ILogger
 import org.bukkit.plugin.java.JavaPlugin
 import org.jetbrains.annotations.Contract
 import java.io.File

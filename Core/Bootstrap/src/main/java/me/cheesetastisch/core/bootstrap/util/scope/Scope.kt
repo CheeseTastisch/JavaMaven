@@ -1,4 +1,4 @@
-package me.cheesetastisch.impl.core.bootstrap.util.scope
+package me.cheesetastisch.core.bootstrap.util.scope
 
 import org.jetbrains.annotations.Contract
 

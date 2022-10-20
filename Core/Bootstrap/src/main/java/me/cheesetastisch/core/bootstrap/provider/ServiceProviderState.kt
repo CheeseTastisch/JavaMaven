@@ -1,4 +1,4 @@
-package me.cheesetastisch.impl.core.bootstrap.provider
+package me.cheesetastisch.core.bootstrap.provider
 
 enum class ServiceProviderState {
 
