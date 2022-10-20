@@ -4,24 +4,22 @@
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
 
-    <artifactId>Java</artifactId>
-
-    <modules>
-        <module>Core</module>
-        <module>Core/Bootstrap</module>
-    </modules>
-
     <groupId>me.cheesetastisch</groupId>
     <version>1.0-dev1.0</version>
     <packaging>pom</packaging>
-
-    <name>consoleApp</name>
+    <artifactId>Java</artifactId>
+    <name>Project</name>
 
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+
         <kotlin.code.style>official</kotlin.code.style>
         <kotlin.compiler.jvmTarget>1.8</kotlin.compiler.jvmTarget>
     </properties>
+
+    <modules>
+        <module>Core</module>
+    </modules>
 
     <repositories>
         <!-- Spigot -->
