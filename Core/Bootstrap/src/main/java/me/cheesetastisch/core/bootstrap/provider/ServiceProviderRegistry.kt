@@ -35,7 +35,7 @@ class ServiceProviderRegistry(private val core: ICore) : IServiceProviderRegistr
                     this.core.logger.info("ServiceProvider \"${interfaceClass.simpleName}\" registered!")
                 } catch (e: Exception) {
                     this.core.logger.error(
-                        "An error occured trying to register the ServiceProvider \"${it.simpleName}\"",
+                        "An error occurred trying to register the ServiceProvider \"${it.simpleName}\"",
                         e
                     )
                 }
@@ -155,7 +155,7 @@ class ServiceProviderRegistry(private val core: ICore) : IServiceProviderRegistr
             if (newChanged.isEmpty()) failCount++
             else failCount = 0
 
-            unchangedProviders.removeAll(newChanged)
+            unchangedProviders.removeAll(newChanged.toSet())
         }
     }
 

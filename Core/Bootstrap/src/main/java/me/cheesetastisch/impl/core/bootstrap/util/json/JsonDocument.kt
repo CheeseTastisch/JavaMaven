@@ -263,12 +263,13 @@ class JsonDocument(private var jsonObject: JsonObject) {
     fun toJsonObject() = jsonObject
 
     @Contract(pure = true)
-    fun toPrettyJson() = gson.toJson(jsonObject)
+    fun toPrettyJson(): String = gson.toJson(jsonObject)
 
     @Contract(pure = true)
     fun toJson() = jsonObject.toString()
 
     companion object {
+
         private val GSON_SUPPLIER = GsonSupplier()
 
         val gson: Gson

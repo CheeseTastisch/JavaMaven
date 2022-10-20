@@ -1,8 +1,8 @@
 package me.cheesetastisch.impl.core.bootstrap.util.scope
 
-fun asExpr(statement: () -> Unit) {
-    statement()
-}
+import org.jetbrains.annotations.Contract
+
+fun asExpr(statement: () -> Unit) = statement()
 
 fun <T: Any?, R: Any?> supply(supplied: T, supplier: (T) -> R): R = supplier(supplied)
 
@@ -11,6 +11,7 @@ fun <T: Any, R: Any?> supplyNullable(supplied: T?, supplier: (T) -> R): R? {
     return supplier(supplied)
 }
 
+@Contract("_ -> this", pure = true)
 fun <T : Any> T.withThis(statement: () -> Unit): T {
     statement()
     return this
