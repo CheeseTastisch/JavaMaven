@@ -10,9 +10,9 @@ import me.cheesetastisch.core.bootstrap.provider.AbstractServiceProvider
 import me.cheesetastisch.core.bootstrap.provider.ServiceProvider
 import me.cheesetastisch.core.bootstrap.util.configuration.ConfigurationFile
 import me.cheesetastisch.core.bootstrap.util.configuration.YamlConfigurationProvider
-import me.cheesetastisch.core.database.Completion
 import me.cheesetastisch.core.database.ISurrealServiceProvider
-import me.cheesetastisch.core.database.UnitCompletion
+import me.cheesetastisch.core.kotlin.future.Future
+import me.cheesetastisch.core.kotlin.future.ToUnitFuture
 import java.io.File
 
 @Suppress("unused")
@@ -91,30 +91,25 @@ class SurrealServiceProvider(core: ICore) : AbstractServiceProvider(core), ISurr
     override val connected: Boolean
         get() = this.connection != null && this.driver != null
 
-    override fun let(key: String, value: String) = UnitCompletion(this.saveDriver.let(key, value))
+    override fun let(key: String, value: String) = ToUnitFuture(this.saveDriver.let(key, value))
 
     override fun <T : Any> query(
         query: String,
         type: Class<T>,
         args: Map<String, String>
-    ): Completion<List<QueryResult<T>>> = Completion(this.saveDriver.query(query, args, type))
+    ): Future<List<QueryResult<T>>> = Future(this.saveDriver.query(query, args, type))
 
-    override fun <T : Any> select(thing: String, type: Class<T>): Completion<List<T>> =
-        Completion(this.saveDriver.select(thing, type))
+    override fun <T : Any> select(thing: String, type: Class<T>) = Future(this.saveDriver.select(thing, type))
 
-    override fun <T : Any> create(thing: String, data: T): Completion<Unit> =
-        UnitCompletion(this.saveDriver.create(thing, data))
+    override fun <T : Any> create(thing: String, data: T) = ToUnitFuture(this.saveDriver.create(thing, data))
 
-    override fun <T : Any> update(thing: String, data: T): Completion<Unit> =
-        UnitCompletion(this.saveDriver.update(thing, data))
+    override fun <T : Any> update(thing: String, data: T) = ToUnitFuture(this.saveDriver.update(thing, data))
 
-    override fun <T : Any, P : Any> change(thing: String, data: T, type: Class<P>): Completion<List<P>> =
-        Completion(this.saveDriver.change(thing, data, type))
+    override fun <T : Any, P : Any> change(thing: String, data: T, type: Class<P>) =
+        Future(this.saveDriver.change(thing, data, type))
 
-    override fun patch(thing: String, patch: List<Patch>): Completion<Unit> =
-        UnitCompletion(this.saveDriver.patch(thing, patch))
+    override fun patch(thing: String, patch: List<Patch>) = ToUnitFuture(this.saveDriver.patch(thing, patch))
 
-    override fun delete(thing: String): Completion<Unit> =
-        UnitCompletion(this.saveDriver.delete(thing))
+    override fun delete(thing: String) = ToUnitFuture(this.saveDriver.delete(thing))
 
 }
