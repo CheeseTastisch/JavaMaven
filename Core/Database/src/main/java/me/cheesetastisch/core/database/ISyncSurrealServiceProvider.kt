@@ -5,6 +5,7 @@ import com.surrealdb.driver.model.patch.Patch
 import me.cheesetastisch.core.bootstrap.provider.IServiceProvider
 import kotlin.reflect.KClass
 
+@Suppress("unused")
 interface ISyncSurrealServiceProvider : IServiceProvider {
 
     val connected: Boolean
@@ -33,12 +34,16 @@ interface ISyncSurrealServiceProvider : IServiceProvider {
 }
 
 // Extensions
+
+@Suppress("unused")
 inline fun <reified T : Any> ISyncSurrealServiceProvider.query(
     query: String,
     args: Map<String, String> = emptyMap()
 ) = this.query(query, T::class.java, args)
 
+@Suppress("unused")
 inline fun <reified T : Any> ISyncSurrealServiceProvider.select(thing: String) = this.select(thing, T::class.java)
 
+@Suppress("unused")
 inline fun <T : Any, reified P : Any> ISyncSurrealServiceProvider.change(thing: String, data: T) =
     this.change(thing, data, P::class.java)

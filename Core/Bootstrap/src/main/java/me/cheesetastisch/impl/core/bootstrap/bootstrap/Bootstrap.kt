@@ -3,6 +3,7 @@ package me.cheesetastisch.impl.core.bootstrap.bootstrap
 import me.cheesetastisch.impl.core.bootstrap.Core
 import org.bukkit.plugin.java.JavaPlugin
 
+@Suppress("unused")
 class Bootstrap : JavaPlugin() {
 
     val core by lazy { Core(this) }

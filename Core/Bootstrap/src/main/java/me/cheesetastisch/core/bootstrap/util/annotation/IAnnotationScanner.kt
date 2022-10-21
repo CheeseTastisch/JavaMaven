@@ -3,6 +3,7 @@ package me.cheesetastisch.core.bootstrap.util.annotation
 import io.github.classgraph.ClassInfo
 import kotlin.reflect.KClass
 
+@Suppress("unused")
 interface IAnnotationScanner {
 
     fun scanClasses(

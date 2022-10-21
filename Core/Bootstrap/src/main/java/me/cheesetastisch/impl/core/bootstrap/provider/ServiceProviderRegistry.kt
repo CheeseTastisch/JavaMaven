@@ -170,7 +170,7 @@ class ServiceProviderRegistry(private val core: ICore) : IServiceProviderRegistr
             if (newChanged.isEmpty()) failCount++
             else failCount = 0
 
-            unchangedProviders.removeAll(failed)
+            unchangedProviders.removeAll(failed.toSet())
             unchangedProviders.removeAll(newChanged.toSet())
         }
     }

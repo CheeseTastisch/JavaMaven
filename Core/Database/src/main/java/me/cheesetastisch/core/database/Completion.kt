@@ -1,8 +1,10 @@
 package me.cheesetastisch.core.database
 
+import me.cheesetastisch.core.kotlin.scope.asExpr
 import java.util.concurrent.CompletableFuture
 import java.util.concurrent.TimeUnit
 
+@Suppress("unused", "MemberVisibilityCanBePrivate")
 open class Completion<T>(protected val future: CompletableFuture<T>) {
 
     constructor(value: T): this(CompletableFuture()) {
@@ -15,9 +17,9 @@ open class Completion<T>(protected val future: CompletableFuture<T>) {
 
     fun getSync(millis: Long): T = this.getSync(millis, TimeUnit.MILLISECONDS)
 
-    fun then(then: (T) -> Unit) = this.future.thenAccept(then)
+    fun then(then: (T) -> Unit) = asExpr { this.future.thenAccept(then) }
 
-    fun then(then: () -> Unit) = this.future.thenRun(then)
+    fun then(then: () -> Unit) = asExpr { this.future.thenRun(then) }
 
     fun catch(exception: (Throwable) -> Unit) {
         this.future.exceptionally {
@@ -28,7 +30,7 @@ open class Completion<T>(protected val future: CompletableFuture<T>) {
 
 }
 
-class UnitCompletion(private val waitFuture: CompletableFuture<*>) : Completion<Unit>(CompletableFuture<Unit>()) {
+class UnitCompletion(waitFuture: CompletableFuture<*>) : Completion<Unit>(CompletableFuture<Unit>()) {
 
     init {
         waitFuture.thenRun { this.future.complete(Unit) }

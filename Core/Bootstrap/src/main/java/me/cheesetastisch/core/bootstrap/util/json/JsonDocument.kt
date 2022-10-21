@@ -10,6 +10,7 @@ import java.math.BigInteger
 import java.nio.charset.StandardCharsets
 import java.nio.file.Files
 
+@Suppress("unused")
 class JsonDocument(private var jsonObject: JsonObject) {
 
     private constructor() : this(JsonObject())
@@ -71,8 +72,8 @@ class JsonDocument(private var jsonObject: JsonObject) {
         return this.read(FileInputStream(file))
     }
 
-
     @Contract(pure = true)
+    @Suppress("BooleanMethodIsAlwaysInverted")
     operator fun contains(key: String): Boolean {
         return jsonObject.has(key)
     }
