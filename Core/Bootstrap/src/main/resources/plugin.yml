@@ -1,0 +1,6 @@
+main: me.cheesetastisch.impl.core.bootstrap.bootstrap.Bootstrap
+name: Plugin
+version: 1.0-dev0.0
+api-version: 1.19
+author: CheeseTastisch
+database: true

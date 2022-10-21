@@ -1,6 +1,19 @@
 /.idea
 
+# iml in main directory
+/Bootstrap.iml
+/Core.iml
+/Database.iml
+/Java.iml
+/Kotlin.iml
+
+#iml in subdirectories
 /Core/Core.iml
 /Core/Bootstrap/Bootstrap.iml
+/Core/Database/Database.iml
+/Core/Kotlin/Kotlin.iml
 
-/Java.iml
+# target folders
+/Core/Bootstrap/target
+/Core/Database/target
+/Core/Kotlin/target
