@@ -8,6 +8,7 @@ import me.cheesetastisch.core.bootstrap.provider.ServiceProvider
 import me.cheesetastisch.core.database.ISurrealServiceProvider
 import me.cheesetastisch.core.database.ISyncSurrealServiceProvider
 
+@Suppress("unused")
 @ServiceProvider(ISyncSurrealServiceProvider::class, [ISurrealServiceProvider::class])
 class SyncSurrealServiceProvider(core: ICore) : AbstractServiceProvider(core), ISyncSurrealServiceProvider {
 

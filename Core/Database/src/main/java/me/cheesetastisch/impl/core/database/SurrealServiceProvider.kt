@@ -15,6 +15,7 @@ import me.cheesetastisch.core.database.ISurrealServiceProvider
 import me.cheesetastisch.core.database.UnitCompletion
 import java.io.File
 
+@Suppress("unused")
 @ServiceProvider(ISurrealServiceProvider::class)
 class SurrealServiceProvider(core: ICore) : AbstractServiceProvider(core), ISurrealServiceProvider {
 
