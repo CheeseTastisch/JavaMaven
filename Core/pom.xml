@@ -23,6 +23,7 @@
         <module>Bootstrap</module>
         <module>Database</module>
         <module>Kotlin</module>
+        <module>Message</module>
     </modules>
 
 </project>

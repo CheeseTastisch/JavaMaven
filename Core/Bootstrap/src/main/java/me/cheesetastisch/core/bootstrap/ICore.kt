@@ -33,9 +33,9 @@ interface ICore {
         get
 
     @Contract(pure = true)
-    fun <T : IServiceProvider> getServiceProvider(`class`: Class<T>): T? = serviceProviderRegistry[`class`]
+    fun <T : IServiceProvider> getServiceProvider(`class`: Class<T>): T = serviceProviderRegistry[`class`]
 
     @Contract(pure = true)
-    fun <T : IServiceProvider> getServiceProvider(`class`: KClass<T>): T? = serviceProviderRegistry[`class`]
+    fun <T : IServiceProvider> getServiceProvider(`class`: KClass<T>): T = serviceProviderRegistry[`class`]
 
 }
