@@ -19,6 +19,7 @@
 
     <modules>
         <module>Core</module>
+        <module>Core/Message</module>
     </modules>
 
     <repositories>

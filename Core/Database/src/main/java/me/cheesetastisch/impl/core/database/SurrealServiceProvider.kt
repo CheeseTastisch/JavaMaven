@@ -11,8 +11,10 @@ import me.cheesetastisch.core.bootstrap.provider.ServiceProvider
 import me.cheesetastisch.core.bootstrap.util.configuration.ConfigurationFile
 import me.cheesetastisch.core.bootstrap.util.configuration.YamlConfigurationProvider
 import me.cheesetastisch.core.database.ISurrealServiceProvider
+import me.cheesetastisch.core.kotlin.future.CompletableFuture
 import me.cheesetastisch.core.kotlin.future.Future
 import me.cheesetastisch.core.kotlin.future.ToUnitFuture
+import me.cheesetastisch.impl.core.database.model.Message
 import java.io.File
 
 @Suppress("unused")
@@ -59,7 +61,7 @@ class SurrealServiceProvider(core: ICore) : AbstractServiceProvider(core), ISurr
 
         this.driver!!.use(
             this.configurationFile.configurationProvider.getString("namespace"),
-            this.configurationFile.configurationProvider.getString("password")
+            this.configurationFile.configurationProvider.getString("database")
         ).get()
 
         if (this.connected) this.core.logger.info("Connected to SurrealDB.")
