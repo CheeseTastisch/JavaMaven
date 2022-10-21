@@ -3,15 +3,13 @@
          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <parent>
-        <artifactId>Java</artifactId>
+        <artifactId>Core</artifactId>
         <groupId>me.cheesetastisch</groupId>
         <version>1.0-dev1.0</version>
     </parent>
-
     <modelVersion>4.0.0</modelVersion>
 
-    <artifactId>Core</artifactId>
-    <packaging>pom</packaging>
+    <artifactId>Utility</artifactId>
 
     <properties>
         <maven.compiler.source>19</maven.compiler.source>
@@ -19,12 +17,19 @@
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     </properties>
 
-    <modules>
-        <module>Bootstrap</module>
-        <module>Database</module>
-        <module>Kotlin</module>
-        <module>Message</module>
-        <module>Utility</module>
-    </modules>
+    <dependencies>
+        <dependency>
+            <groupId>me.cheesetastisch</groupId>
+            <artifactId>Bootstrap</artifactId>
+            <version>1.0-dev1.0</version>
+            <scope>compile</scope>
+        </dependency>
+        <dependency>
+            <groupId>me.cheesetastisch</groupId>
+            <artifactId>Kotlin</artifactId>
+            <version>1.0-dev1.0</version>
+            <scope>compile</scope>
+        </dependency>
+    </dependencies>
 
 </project>

@@ -7,6 +7,7 @@
 /Java.iml
 /Kotlin.iml
 /Message.iml
+/Utility.iml
 
 #iml in subdirectories
 /Core/Core.iml
@@ -14,9 +15,11 @@
 /Core/Database/Database.iml
 /Core/Kotlin/Kotlin.iml
 /Core/Message/Message.iml
+/Core/Utility/Utility.iml
 
 # target folders
 /Core/Bootstrap/target
 /Core/Database/target
 /Core/Kotlin/target
 /Core/Message/target
+/Core/Utility/target
