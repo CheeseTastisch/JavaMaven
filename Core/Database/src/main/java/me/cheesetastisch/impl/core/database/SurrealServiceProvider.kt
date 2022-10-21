@@ -13,7 +13,6 @@ import me.cheesetastisch.core.bootstrap.util.configuration.YamlConfigurationProv
 import me.cheesetastisch.core.database.Completion
 import me.cheesetastisch.core.database.ISurrealServiceProvider
 import me.cheesetastisch.core.database.UnitCompletion
-import me.cheesetastisch.core.kotlin.scope.asExpr
 import java.io.File
 
 @ServiceProvider(ISurrealServiceProvider::class)
@@ -48,7 +47,7 @@ class SurrealServiceProvider(core: ICore) : AbstractServiceProvider(core), ISurr
             this.configurationFile.configurationProvider.getString("host"),
             this.configurationFile.configurationProvider.getInteger("port"),
             this.configurationFile.configurationProvider.getBoolean("tls")
-        );
+        )
         this.connection!!.connect(this.configurationFile.configurationProvider.getInteger("timeout"))
 
         this.driver = AsyncSurrealDriver(this.connection)
@@ -89,7 +88,7 @@ class SurrealServiceProvider(core: ICore) : AbstractServiceProvider(core), ISurr
         get() = this.driver ?: throw NullPointerException("The SurrealDB driver isn't initialized")
 
     override val connected: Boolean
-        get() = this.connection == null || this.driver == null
+        get() = this.connection != null && this.driver != null
 
     override fun let(key: String, value: String) = UnitCompletion(this.saveDriver.let(key, value))
 

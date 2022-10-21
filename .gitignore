@@ -7,6 +7,12 @@
 /Java.iml
 /Kotlin.iml
 
+#iml in subdirectories
+/Core/Core.iml
+/Core/Bootstrap/Bootstrap.iml
+/Core/Database/Database.iml
+/Core/Kotlin/Kotlin.iml
+
 # target folders
 /Core/Bootstrap/target
 /Core/Database/target

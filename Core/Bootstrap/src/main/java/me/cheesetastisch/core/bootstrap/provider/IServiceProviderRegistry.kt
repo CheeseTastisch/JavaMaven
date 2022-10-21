@@ -9,8 +9,8 @@ interface IServiceProviderRegistry {
 
     fun getServiceProviders(): Map<Class<out IServiceProvider>, AbstractServiceProvider>
 
-    operator fun <T : IServiceProvider> get(`class`: KClass<T>): T? = get(`class`.java)
+    operator fun <T : IServiceProvider> get(`class`: KClass<T>): T = get(`class`.java)
 
-    operator fun <T : IServiceProvider> get(`class`: Class<T>): T?
+    operator fun <T : IServiceProvider> get(`class`: Class<T>): T
 
 }

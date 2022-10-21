@@ -24,6 +24,7 @@
             <groupId>me.cheesetastisch</groupId>
             <artifactId>Kotlin</artifactId>
             <version>1.0-dev1.0</version>
+            <scope>provided</scope>
         </dependency>
 
         <!-- ClassGraph -->

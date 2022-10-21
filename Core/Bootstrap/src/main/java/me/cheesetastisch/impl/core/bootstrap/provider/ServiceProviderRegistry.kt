@@ -2,6 +2,7 @@ package me.cheesetastisch.impl.core.bootstrap.provider
 
 import me.cheesetastisch.core.bootstrap.ICore
 import me.cheesetastisch.core.bootstrap.provider.*
+import java.lang.IllegalArgumentException
 
 class ServiceProviderRegistry(private val core: ICore) : IServiceProviderRegistry {
 
@@ -29,7 +30,7 @@ class ServiceProviderRegistry(private val core: ICore) : IServiceProviderRegistr
                     }
 
                     serviceProviders[interfaceClass.java] = instance
-                    newServiceProviders + interfaceClass.java
+                    newServiceProviders.add(interfaceClass.java)
 
                     this.core.logger.info("ServiceProvider \"${interfaceClass.simpleName}\" registered!")
                 } catch (e: Exception) {
@@ -65,6 +66,7 @@ class ServiceProviderRegistry(private val core: ICore) : IServiceProviderRegistr
             it.forEach { provider -> this.core.logger.warn("- $provider") }
             this.core.logger.warn("could not be loaded because of dependency issues.")
             this.core.logger.warn("Do they depend each other, or depend not registered ServiceProviders?")
+            this.core.logger.warn("Did the ServiceProviders they depend load correctly?")
         }
 
         this.core.logger.info("Loaded ${this.serviceProviders.size} ServiceProvider(s).")
@@ -86,7 +88,12 @@ class ServiceProviderRegistry(private val core: ICore) : IServiceProviderRegistr
 
             this.core.logger.info("ServiceProvider \"$name\" enabled!")
             return@stateProviders true
-        }) { }
+        }) {
+            this.core.logger.warn("The ServiceProviders")
+            it.forEach { provider -> this.core.logger.warn("- $provider") }
+            this.core.logger.warn("could not be started.")
+            this.core.logger.warn("Did the ServiceProviders they depend start correctly?")
+        }
 
         this.core.logger.info("Enabled ${this.serviceProviders.size} ServiceProvider(s).")
     }
@@ -107,7 +114,12 @@ class ServiceProviderRegistry(private val core: ICore) : IServiceProviderRegistr
 
             this.core.logger.info("ServiceProvider \"$name\" disabled!")
             return@stateProviders true
-        }) { }
+        }) {
+            this.core.logger.warn("The ServiceProviders")
+            it.forEach { provider -> this.core.logger.warn("- $provider") }
+            this.core.logger.warn("could not be stopped.")
+            this.core.logger.warn("Did the ServiceProviders they depend stop correctly?")
+        }
 
         this.core.logger.info("Disabled ${this.serviceProviders.size} ServiceProvider(s).")
     }
@@ -125,13 +137,16 @@ class ServiceProviderRegistry(private val core: ICore) : IServiceProviderRegistr
             if (failCount == 3) {
                 dependencyIssue(unchangedProviders.map { it.simpleName })
                 unchangedProviders.forEach { this.serviceProviders - it }
+                break
             }
 
             val newChanged = mutableListOf<Class<out IServiceProvider>>()
+            val failed = mutableListOf<Class<out IServiceProvider>>()
+
             unchangedProviders.forEach {
                 val instance = this.serviceProviders[it] ?: return@forEach
                 if (instance.state != currentState) {
-                    newChanged + it
+                    newChanged.add(it)
                     return@forEach
                 }
 
@@ -142,23 +157,27 @@ class ServiceProviderRegistry(private val core: ICore) : IServiceProviderRegistr
                         this.serviceProviders[dependency.java]?.state == toState
                     }) {
                     if (!call(it.simpleName, instance)) {
-                        this.serviceProviders - instance
+                        this.serviceProviders.remove(it)
+                        failed.add(it)
                         return@forEach
                     }
 
                     instance.state = toState
-                    newChanged + it
+                    newChanged.add(it)
                 }
             }
 
             if (newChanged.isEmpty()) failCount++
             else failCount = 0
 
+            unchangedProviders.removeAll(failed)
             unchangedProviders.removeAll(newChanged.toSet())
         }
     }
 
-    override fun <T : IServiceProvider> get(`class`: Class<T>): T? {
-        TODO("Not yet implemented")
+    override fun <T : IServiceProvider> get(`class`: Class<T>): T {
+        @Suppress("UNCHECKED_CAST")
+        return (this.serviceProviders[`class`] as T?)
+            ?: throw IllegalArgumentException("No such ServiceProvider registered.")
     }
 }
