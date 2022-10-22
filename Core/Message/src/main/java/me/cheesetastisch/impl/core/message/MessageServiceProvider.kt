@@ -7,12 +7,11 @@ import me.cheesetastisch.core.bootstrap.provider.AbstractServiceProvider
 import me.cheesetastisch.core.bootstrap.provider.ServiceProvider
 import me.cheesetastisch.core.database.ISurrealServiceProvider
 import me.cheesetastisch.core.database.select
-import me.cheesetastisch.core.kotlin.future.CompletableFuture
-import me.cheesetastisch.core.kotlin.future.Future
+import me.cheesetastisch.core.xjkl.future.CompletableFuture
+import me.cheesetastisch.core.xjkl.future.Future
 import me.cheesetastisch.core.message.IMessageServiceProvider
 import me.cheesetastisch.impl.core.message.model.Message
 import net.md_5.bungee.api.ChatColor
-import org.bukkit.Bukkit
 import java.awt.Color
 import java.text.MessageFormat
 import java.util.concurrent.TimeUnit

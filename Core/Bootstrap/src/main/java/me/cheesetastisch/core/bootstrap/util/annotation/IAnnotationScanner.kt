@@ -1,6 +1,8 @@
 package me.cheesetastisch.core.bootstrap.util.annotation
 
 import io.github.classgraph.ClassInfo
+import io.github.classgraph.MethodInfo
+import java.lang.reflect.Method
 import kotlin.reflect.KClass
 
 @Suppress("unused")
@@ -28,6 +30,28 @@ interface IAnnotationScanner {
     fun scanClasses(
         annotation: Class<out Annotation>,
         vararg packages: String
-    ): List<Class<*>> = scanClasses(annotation, { true }, *packages)
+    ) = scanClasses(annotation, { true }, *packages)
+
+    fun scanMethods(
+        annotation: KClass<out Annotation>,
+        filter: (MethodInfo) -> Boolean,
+        vararg packages: String
+    ) = scanMethods(annotation.java, filter, *packages)
+
+    fun scanMethods(
+        annotation: Class<out Annotation>,
+        filter: (MethodInfo) -> Boolean,
+        vararg packages: String
+    ): List<Method>
+
+    fun scanMethods(
+        annotation: KClass<out Annotation>,
+        vararg packages: String
+    ) = scanMethods(annotation.java, *packages)
+
+    fun scanMethods(
+        annotation: Class<out Annotation>,
+        vararg packages: String
+    ) = scanMethods(annotation, { true }, *packages)
 
 }

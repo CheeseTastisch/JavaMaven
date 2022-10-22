@@ -1,6 +1,6 @@
-package me.cheesetastisch.core.kotlin.future
+package me.cheesetastisch.core.xjkl.future
 
-import me.cheesetastisch.core.kotlin.scope.asExpr
+import me.cheesetastisch.core.xjkl.scope.asExpr
 import java.util.concurrent.CompletableFuture
 import java.util.concurrent.TimeUnit
 

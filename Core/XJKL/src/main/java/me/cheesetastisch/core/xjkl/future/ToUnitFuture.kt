@@ -1,4 +1,4 @@
-package me.cheesetastisch.core.kotlin.future
+package me.cheesetastisch.core.xjkl.future
 
 class ToUnitFuture(waitFuture: java.util.concurrent.CompletableFuture<*>) : CompletableFuture<Unit>() {
 

@@ -11,10 +11,8 @@ import me.cheesetastisch.core.bootstrap.provider.ServiceProvider
 import me.cheesetastisch.core.bootstrap.util.configuration.ConfigurationFile
 import me.cheesetastisch.core.bootstrap.util.configuration.YamlConfigurationProvider
 import me.cheesetastisch.core.database.ISurrealServiceProvider
-import me.cheesetastisch.core.kotlin.future.CompletableFuture
-import me.cheesetastisch.core.kotlin.future.Future
-import me.cheesetastisch.core.kotlin.future.ToUnitFuture
-import me.cheesetastisch.impl.core.database.model.Message
+import me.cheesetastisch.core.xjkl.future.Future
+import me.cheesetastisch.core.xjkl.future.ToUnitFuture
 import java.io.File
 
 @Suppress("unused")

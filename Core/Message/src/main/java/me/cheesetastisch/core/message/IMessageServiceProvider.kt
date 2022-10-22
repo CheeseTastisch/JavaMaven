@@ -1,7 +1,7 @@
 package me.cheesetastisch.core.message
 
 import me.cheesetastisch.core.bootstrap.provider.IServiceProvider
-import me.cheesetastisch.core.kotlin.future.Future
+import me.cheesetastisch.core.xjkl.future.Future
 
 interface IMessageServiceProvider: IServiceProvider {
 
