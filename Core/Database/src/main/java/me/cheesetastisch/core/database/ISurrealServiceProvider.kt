@@ -3,7 +3,7 @@ package me.cheesetastisch.core.database
 import com.surrealdb.driver.model.QueryResult
 import com.surrealdb.driver.model.patch.Patch
 import me.cheesetastisch.core.bootstrap.provider.IServiceProvider
-import me.cheesetastisch.core.kotlin.future.Future
+import me.cheesetastisch.core.xjkl.future.Future
 import kotlin.reflect.KClass
 
 @Suppress("unused")

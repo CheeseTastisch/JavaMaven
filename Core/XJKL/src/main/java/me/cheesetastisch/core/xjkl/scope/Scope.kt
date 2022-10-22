@@ -1,5 +1,5 @@
 @file:Suppress("unused")
-package me.cheesetastisch.core.kotlin.scope
+package me.cheesetastisch.core.xjkl.scope
 
 import org.jetbrains.annotations.Contract
 
