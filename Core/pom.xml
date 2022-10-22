@@ -22,7 +22,7 @@
     <modules>
         <module>Bootstrap</module>
         <module>Database</module>
-        <module>Kotlin</module>
+        <module>XJKL</module>
         <module>Message</module>
         <module>Utility</module>
     </modules>

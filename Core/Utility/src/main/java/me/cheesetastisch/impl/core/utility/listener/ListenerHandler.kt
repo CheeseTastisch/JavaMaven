@@ -9,7 +9,6 @@ import org.bukkit.event.Event
 import org.bukkit.event.EventPriority
 import org.bukkit.plugin.EventExecutor
 import java.lang.reflect.Method
-import kotlin.reflect.KClass
 
 class ListenerHandler(private val core: ICore) : IListenerHandler {
 
@@ -120,8 +119,8 @@ class ListenerHandler(private val core: ICore) : IListenerHandler {
     private fun shouldRegister(event: Class<out Event>, events: List<Pair<Class<out Event>, Boolean>>) =
         events.any { (methodEvent, subevents) -> shouldCall(event, methodEvent, subevents) }
 
-    override fun <T : Any> registerListenerInstance(`class`: KClass<out T>, instance: T) {
-        this.instances[`class`.java] = instance
+    override fun registerListenerInstance(instance: Any) {
+        this.instances[instance::class.java] = instance
     }
 
 }

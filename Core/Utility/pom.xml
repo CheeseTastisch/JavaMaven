@@ -18,17 +18,18 @@
     </properties>
 
     <dependencies>
+        <!-- Internal dependencies -->
         <dependency>
             <groupId>me.cheesetastisch</groupId>
             <artifactId>Bootstrap</artifactId>
             <version>1.0-dev1.0</version>
-            <scope>compile</scope>
+            <scope>provided</scope>
         </dependency>
         <dependency>
             <groupId>me.cheesetastisch</groupId>
-            <artifactId>Kotlin</artifactId>
+            <artifactId>XJKL</artifactId>
             <version>1.0-dev1.0</version>
-            <scope>compile</scope>
+            <scope>provided</scope>
         </dependency>
     </dependencies>
 
