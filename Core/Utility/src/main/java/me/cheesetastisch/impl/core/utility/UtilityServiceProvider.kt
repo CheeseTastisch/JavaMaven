@@ -20,6 +20,7 @@ class UtilityServiceProvider(core: ICore) : AbstractServiceProvider(core), IUtil
     override fun enable() {
         this.listenerHandler.loadListeners()
         this.listenerHandler.registerEvents()
+        this.commandHandler.registerCommands()
     }
 
 }

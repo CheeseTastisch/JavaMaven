@@ -29,40 +29,30 @@ class MessageServiceProvider(core: ICore) : AbstractServiceProvider(core), IMess
 
         this.getFromDatabase(key)
             .then { dbMessage ->
-                this.core.logger.info("5")
                 if (dbMessage == null) {
-                    this.core.logger.info("6")
                     future.complete(MessageFormat.format(messageNotFound, key))
                     return@then
                 }
 
-                this.core.logger.info("7")
                 var message: String = dbMessage
 
-                this.core.logger.info("8")
                 placeholders.forEach {
                     val split = it.split("=>")
                     message = message.replace("%${split[0]}%", it.substring(split[0].length + 2))
                 }
 
-                this.core.logger.info("9")
-
                 var found = 0
                 var run = 0
-                this.core.logger.info("10")
                 globalPlaceholders.forEach { (k, v) ->
-                    this.core.logger.info("11 $k => $v")
                     if (message.contains("%$k%")) {
                         found++
 
                         this.getFromDatabase(v)
                             .then global@{ result ->
-                                this.core.logger.info("12 $k")
                                 run++
 
                                 if (result == null) return@global
                                 message = message.replace("%$k%", result)
-                                this.core.logger.info("1^3")
 
                                 if (found == run) future.complete(this.replaceColors(message, '&'))
                             }
@@ -100,15 +90,11 @@ class MessageServiceProvider(core: ICore) : AbstractServiceProvider(core), IMess
         else {
             this.core.getServiceProvider(ISurrealServiceProvider::class).select<Message>("message:$key")
                 .then { result ->
-                    this.core.logger.info("1")
                     if (result.isEmpty()) {
-                        this.core.logger.info("2")
                         future.complete(null)
-                        this.core.logger.info("3")
                         return@then
                     }
 
-                    this.core.logger.info("4")
                     future.complete(result[0].message)
                 }
         }

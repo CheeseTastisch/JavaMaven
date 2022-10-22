@@ -6,10 +6,14 @@ import me.cheesetastisch.core.message.IMessageServiceProvider
 import me.cheesetastisch.core.utility.command.Command
 import me.cheesetastisch.core.utility.command.ICommandHandler
 import me.cheesetastisch.core.utility.listener.ListenerTrigger
+import me.cheesetastisch.core.xjkl.extention.inArray
+import org.bukkit.command.CommandSender
 import org.bukkit.event.player.PlayerCommandPreprocessEvent
+import org.bukkit.event.server.ServerCommandEvent
 
 class CommandHandler(private val core: ICore) : ICommandHandler {
 
+    private val whitelisted = listOf("stop", "rl")
     private val execution = mutableListOf<Command>()
 
     fun registerCommands() {
@@ -47,7 +51,8 @@ class CommandHandler(private val core: ICore) : ICommandHandler {
         this.core.logger.info("Registered $count commands.")
     }
 
-    private fun getCommand(name: String): Command? = execution.firstOrNull { it.name == name || name in it.aliases }
+    private fun getCommand(name: String): Command? =
+        execution.firstOrNull { it.name.equals(name, true) || name.inArray(it.aliases) }
 
     private fun isRegistered(command: Class<out Command>) = execution.any { it.javaClass == command }
 
@@ -62,16 +67,31 @@ class CommandHandler(private val core: ICore) : ICommandHandler {
     @ListenerTrigger(PlayerCommandPreprocessEvent::class)
     fun playerCommandPreProcess(event: PlayerCommandPreprocessEvent) {
         event.isCancelled = true
-        val split = event.message.split(" ")
+        this.executeCommand(event.player, event.message)
+    }
+
+    @ListenerTrigger(ServerCommandEvent::class, false)
+    fun serverCommand(event: ServerCommandEvent) {
+        if (whitelisted.any { event.command.startsWith(it) }) return
+
+        event.isCancelled = true
+        this.executeCommand(event.sender, event.command)
+    }
+
+    private fun executeCommand(sender: CommandSender, message: String) {
+        val use = if (message.startsWith("/")) message.substring(1) else message
+        val split = use.split(" ")
         val command = this.getCommand(split[0])
 
         if (command == null) {
-            event.player.sendMessage(this.core.getServiceProvider(IMessageServiceProvider::class)
-                .getMessage("core.utility.command.unknown", "command=>${split[0]}"))
+            sender.sendMessage(
+                this.core.getServiceProvider(IMessageServiceProvider::class)
+                    .getMessage("core.utility.command.unknown", "command=>${split[0]}")
+            )
             return
         }
 
-        command.execute(event.player, split[0], split.toTypedArray().copyOfRange(1, split.size))
+        command.execute(sender, split[0], split.toTypedArray().copyOfRange(1, split.size))
     }
 
 }
