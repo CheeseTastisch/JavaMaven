@@ -2,18 +2,19 @@ package me.cheesetastisch.impl.core.utility.listener
 
 import io.github.classgraph.ClassGraph
 import me.cheesetastisch.core.bootstrap.ICore
-import me.cheesetastisch.core.utility.listener.Listener
+import me.cheesetastisch.core.utility.listener.IListenerHandler
 import me.cheesetastisch.core.utility.listener.ListenerTrigger
 import org.bukkit.Bukkit
 import org.bukkit.event.Event
 import org.bukkit.event.EventPriority
 import org.bukkit.plugin.EventExecutor
 import java.lang.reflect.Method
+import kotlin.reflect.KClass
 
-class ListenerHandler(private val core: ICore) {
+class ListenerHandler(private val core: ICore) : IListenerHandler {
 
-    private val instances = mutableMapOf<Class<out Listener>, Listener>()
-    private val listeners = mutableMapOf<Class<out Event>, MutableList<Method>>()
+    private val instances = mutableMapOf<Class<*>, Any>()
+    private val listeners = mutableMapOf<Class<*>, MutableList<Method>>()
 
     fun loadListeners() {
         this.core.logger.info("Loading listeners...")
@@ -35,27 +36,22 @@ class ListenerHandler(private val core: ICore) {
                     return@forEach
                 }
 
-                if (!Listener::class.java.isAssignableFrom(declaringClass)) {
-                    this.core.logger.error(
-                        "Couldn't register listener for " + annotation.event.simpleName + " in "
-                                + declaringClass.simpleName + " because the class doesn't extend listener."
-                    )
-                    return@forEach
-                }
-
-                val listenerClass = declaringClass.asSubclass(Listener::class.java)
                 val constructor = try {
-                    listenerClass.getDeclaredConstructor(ICore::class.java)
+                    declaringClass.getDeclaredConstructor(ICore::class.java)
                 } catch (e: NoSuchMethodException) {
-                    this.core.logger.error(
-                        "Couldn't register listener for " + annotation.event.simpleName + " in "
-                                + declaringClass.simpleName + " because the class doesn't have the correct constructor."
-                    )
-                    null
+                    try {
+                        declaringClass.getDeclaredConstructor()
+                    } catch (ex: NoSuchMethodException) {
+                        this.core.logger.error(
+                            "Couldn't register listener for " + annotation.event.simpleName + " in "
+                                    + declaringClass.simpleName + " because the class doesn't have the correct constructor."
+                        )
+                        null
+                    }
                 } ?: return@forEach
 
                 val instance = constructor.newInstance(this.core)
-                this.instances[listenerClass] = instance
+                this.instances[declaringClass] = instance
 
                 this.listeners.putIfAbsent(annotation.event.java, mutableListOf())
                 this.listeners[annotation.event.java]!!.add(it)
@@ -112,6 +108,10 @@ class ListenerHandler(private val core: ICore) {
                 val instance = this.instances[it.declaringClass] ?: return@forEach
                 it.invoke(instance, event)
             }
+    }
+
+    override fun <T : Any> registerListenerInstance(`class`: KClass<out T>, instance: T) {
+        this.instances[`class`.java] = instance
     }
 
 }

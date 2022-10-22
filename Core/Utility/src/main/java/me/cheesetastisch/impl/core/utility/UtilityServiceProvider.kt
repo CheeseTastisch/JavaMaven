@@ -9,7 +9,7 @@ import me.cheesetastisch.impl.core.utility.listener.ListenerHandler
 @ServiceProvider(IUtilityServiceProvider::class)
 class UtilityServiceProvider(core: ICore) : AbstractServiceProvider(core), IUtilityServiceProvider {
 
-    private val listenerHandler = ListenerHandler(this.core)
+    override val listenerHandler = ListenerHandler(this.core)
 
     override fun enable() {
         this.listenerHandler.loadListeners()
