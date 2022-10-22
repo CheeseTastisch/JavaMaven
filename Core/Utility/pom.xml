@@ -31,6 +31,12 @@
             <version>1.0-dev1.0</version>
             <scope>provided</scope>
         </dependency>
+        <dependency>
+            <groupId>me.cheesetastisch</groupId>
+            <artifactId>Message</artifactId>
+            <version>1.0-dev1.0</version>
+            <scope>provided</scope>
+        </dependency>
     </dependencies>
 
 </project>
