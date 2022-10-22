@@ -14,7 +14,7 @@ import kotlin.reflect.KClass
 class ListenerHandler(private val core: ICore) : IListenerHandler {
 
     private val instances = mutableMapOf<Class<*>, Any>()
-    private val listeners = mutableMapOf<Class<*>, MutableList<Method>>()
+    private val listeners = mutableMapOf<Class<out Event>, MutableList<Pair<Method, Boolean>>>()
 
     fun loadListeners() {
         this.core.logger.info("Loading listeners...")
@@ -32,7 +32,7 @@ class ListenerHandler(private val core: ICore) : IListenerHandler {
 
                 if (declaringClass in this.instances) {
                     this.listeners.putIfAbsent(annotation.event.java, mutableListOf())
-                    this.listeners[annotation.event.java]!!.add(it)
+                    this.listeners[annotation.event.java]!!.add(it to annotation.subevents)
                     return@forEach
                 }
 
@@ -54,7 +54,7 @@ class ListenerHandler(private val core: ICore) : IListenerHandler {
                 this.instances[declaringClass] = instance
 
                 this.listeners.putIfAbsent(annotation.event.java, mutableListOf())
-                this.listeners[annotation.event.java]!!.add(it)
+                this.listeners[annotation.event.java]!!.add(it to annotation.subevents)
             }
         this.core.logger.info("Loaded ${listeners.size} listeners.")
     }
@@ -74,17 +74,18 @@ class ListenerHandler(private val core: ICore) : IListenerHandler {
             .asSequence()
             .filter { !it.isAbstract }
             .forEach {
-                val eventClass = it.loadClass()
+                val eventClass = it.loadClass().asSubclass(Event::class.java)
                 if (!eventClass.declaredMethods
                         .any { method -> method.parameterCount == 0 && method.name == "getHandlers" } ||
-                    this.listeners.none { (`class`, _) -> `class`.isAssignableFrom(eventClass) }
+                    this.listeners.none { (`class`, events) ->
+                        this.shouldRegister(
+                            eventClass,
+                            events.map { (_, subevents) -> `class` to subevents })
+                    }
                 ) return@forEach
 
-                this.core.logger.info(eventClass.simpleName)
-
-                @Suppress("UNCHECKED_CAST")
                 Bukkit.getPluginManager().registerEvent(
-                    eventClass as Class<out Event>,
+                    eventClass,
                     listener,
                     EventPriority.NORMAL,
                     executor,
@@ -102,13 +103,22 @@ class ListenerHandler(private val core: ICore) : IListenerHandler {
 
         this.listeners
             .filter { (`class`, _) -> `class`.isAssignableFrom(eventClass) }
-            .map { it.value }
+            .map { it.value.filter { (_, subevents) -> this.shouldCall(eventClass, it.key, subevents) } }
             .flatten()
+            .map { it.first }
             .forEach {
                 val instance = this.instances[it.declaringClass] ?: return@forEach
                 it.invoke(instance, event)
             }
     }
+
+    private fun shouldCall(event: Class<out Event>, methodEvent: Class<out Event>, subevents: Boolean): Boolean {
+        if (event == methodEvent) return true
+        return methodEvent.isAssignableFrom(event) && subevents
+    }
+
+    private fun shouldRegister(event: Class<out Event>, events: List<Pair<Class<out Event>, Boolean>>) =
+        events.any { (methodEvent, subevents) -> shouldCall(event, methodEvent, subevents) }
 
     override fun <T : Any> registerListenerInstance(`class`: KClass<out T>, instance: T) {
         this.instances[`class`.java] = instance
